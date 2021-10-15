@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="DB2Entity.CUSTOMER" Width="1.75" PointX="5.125" PointY="2.375" />
         <EntityTypeShape EntityType="DB2Entity.ORDER" Width="1.75" PointX="7.875" PointY="2.75" />
         <AssociationConnector Association="DB2Entity.AGENTSCUSTOMER" />
+        <AssociationConnector Association="DB2Entity.AGENTSORDER" />
+        <AssociationConnector Association="DB2Entity.CUSTOMERORDER" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
