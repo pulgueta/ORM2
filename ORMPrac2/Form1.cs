@@ -19,8 +19,28 @@ namespace ORMPrac2 {
                 var oAgents = db.AGENTS.ToList();
                 if (oAgents.Count > 0) {
                     MessageBox.Show("Database has information now", "Successful operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } else {
-                    // fill db
+                } else { // fill fb
+                    using (var dbTransaction = db.Database.BeginTransaction()) {
+                        try {
+                            List<Model.AGENTS> agents = new List<Model.AGENTS>();
+
+                            agents.Add(new Model.AGENTS { AGENT_CODE = 6, AGENT_NAME = "Ramasundar", WORKING_AREA = "Bangalore", COMISSION = 0.15m, COUNTRY = "", PHONE_NO = "077-25814763" });
+                            agents.Add(new Model.AGENTS { AGENT_CODE = 3, AGENT_NAME = "Alex", WORKING_AREA = "London", COMISSION = 0.13m, COUNTRY = "", PHONE_NO = "075-12458969" });
+
+                            db.AGENTS.AddRange(agents);
+                            db.SaveChanges();
+                            dbTransaction.Commit();
+
+                            MessageBox.Show("Database has been populated successfully", "Successful operation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        } catch (Exception ex) {
+                            dbTransaction.Rollback();
+                            MessageBox.Show("An unexpected error occured, database could not be filled. \n\nApplication will be closed.", "Error found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Application.Exit();
+
+                            return;
+                        }
+                    }
+                    
                     MessageBox.Show("Database has been populated successfully", "Successful operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
