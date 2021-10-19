@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DB2Entity" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="DB2EntityContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AGENTS" EntityType="DB2Entity.AGENTS" />
+    <EntitySet Name="CUSTOMERS" EntityType="DB2Entity.CUSTOMER" />
+    <EntitySet Name="ORDER" EntityType="DB2Entity.ORDER" />
+    <AssociationSet Name="AGENTSCUSTOMER" Association="DB2Entity.AGENTSCUSTOMER">
+      <End Role="AGENTS" EntitySet="AGENTS" />
+      <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
+    </AssociationSet>
+    <AssociationSet Name="AGENTSORDER" Association="DB2Entity.AGENTSORDER">
+      <End Role="AGENTS" EntitySet="AGENTS" />
+      <End Role="ORDER" EntitySet="ORDER" />
+    </AssociationSet>
+    <AssociationSet Name="CUSTOMERORDER" Association="DB2Entity.CUSTOMERORDER">
+      <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
+      <End Role="ORDER" EntitySet="ORDER" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AGENTS">
+    <Key>
+      <PropertyRef Name="AGENT_CODE" />
+    </Key>
+    <Property Name="AGENT_CODE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+    <Property Name="AGENT_NAME" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="WORKING_AREA" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="COMISSION" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="PHONE_NO" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="COUNTRY" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="CUSTOMER" Relationship="DB2Entity.AGENTSCUSTOMER" FromRole="AGENTS" ToRole="CUSTOMER" />
+    <NavigationProperty Name="ORDER" Relationship="DB2Entity.AGENTSORDER" FromRole="AGENTS" ToRole="ORDER" />
+  </EntityType>
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="CUST_CODE" />
+    </Key>
+    <Property Name="CUST_CODE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CUST_NAME" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CUST_CITY" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="WORKING_AREA" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CUST_COUNTRY" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="GRADE" Type="Int32" Nullable="false" />
+    <Property Name="OPENING_AMT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="RECEIVE_AMT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="PAYMENT_AMT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="OUTSTANDING_AMT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="PHONE_NO" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="AGENTS" Relationship="DB2Entity.AGENTSCUSTOMER" FromRole="CUSTOMER" ToRole="AGENTS" />
+    <Property Name="AGENT_CODE" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ORDER" Relationship="DB2Entity.CUSTOMERORDER" FromRole="CUSTOMER" ToRole="ORDER" />
+  </EntityType>
+  <EntityType Name="ORDER">
+    <Key>
+      <PropertyRef Name="ORD_NUM" />
+    </Key>
+    <Property Name="ORD_NUM" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ORD_AMOUNT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="ADVANCE_AMOUNT" Type="String" Nullable="false" />
+    <Property Name="ORD_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ORD_DESCRIPTION" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="AGENTS" Relationship="DB2Entity.AGENTSORDER" FromRole="ORDER" ToRole="AGENTS" />
+    <Property Name="AGENT_CODE" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CUSTOMER" Relationship="DB2Entity.CUSTOMERORDER" FromRole="ORDER" ToRole="CUSTOMER" />
+    <Property Name="CUST_CODE" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="AGENTSCUSTOMER">
+    <End Type="DB2Entity.AGENTS" Role="AGENTS" Multiplicity="1" />
+    <End Type="DB2Entity.CUSTOMER" Role="CUSTOMER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGENTS">
+        <PropertyRef Name="AGENT_CODE" />
+      </Principal>
+      <Dependent Role="CUSTOMER">
+        <PropertyRef Name="AGENT_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AGENTSORDER">
+    <End Type="DB2Entity.AGENTS" Role="AGENTS" Multiplicity="1" />
+    <End Type="DB2Entity.ORDER" Role="ORDER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGENTS">
+        <PropertyRef Name="AGENT_CODE" />
+      </Principal>
+      <Dependent Role="ORDER">
+        <PropertyRef Name="AGENT_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CUSTOMERORDER">
+    <End Type="DB2Entity.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+    <End Type="DB2Entity.ORDER" Role="ORDER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="CUST_CODE" />
+      </Principal>
+      <Dependent Role="ORDER">
+        <PropertyRef Name="CUST_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

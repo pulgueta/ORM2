@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/14/2021 20:17:02
+-- Date Created: 10/19/2021 17:53:33
 -- Generated from EDMX file: E:\Documentos\dbClass\ORM2\ORMPrac2\Model\DB2Entity.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,29 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_AGENTSCUSTOMER]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CUSTOMERS] DROP CONSTRAINT [FK_AGENTSCUSTOMER];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AGENTSORDER]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ODER_NUM] DROP CONSTRAINT [FK_AGENTSORDER];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CUSTOMERORDER]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ODER_NUM] DROP CONSTRAINT [FK_CUSTOMERORDER];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[AGENTS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AGENTS];
+GO
+IF OBJECT_ID(N'[dbo].[CUSTOMERS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CUSTOMERS];
+GO
+IF OBJECT_ID(N'[dbo].[ODER_NUM]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ODER_NUM];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -51,15 +69,15 @@ CREATE TABLE [dbo].[CUSTOMERS] (
     [PAYMENT_AMT] decimal(18,3)  NOT NULL,
     [OUTSTANDING_AMT] decimal(18,3)  NOT NULL,
     [PHONE_NO] nvarchar(max)  NOT NULL,
-    [AGENTS_CODE] int  NOT NULL
+    [AGENT_CODE] int  NOT NULL
 );
 GO
 
--- Creating table 'ODER_NUM'
-CREATE TABLE [dbo].[ODER_NUM] (
+-- Creating table 'ORDER'
+CREATE TABLE [dbo].[ORDER] (
     [ORD_NUM] int IDENTITY(1,1) NOT NULL,
     [ORD_AMOUNT] decimal(18,3)  NOT NULL,
-    [ADVANCE_AMOUNT] decimal(18,3)  NOT NULL,
+    [ADVANCE_AMOUNT] nvarchar(max)  NOT NULL,
     [ORD_DATE] datetime  NOT NULL,
     [ORD_DESCRIPTION] nvarchar(max)  NOT NULL,
     [AGENT_CODE] int  NOT NULL,
@@ -83,9 +101,9 @@ ADD CONSTRAINT [PK_CUSTOMERS]
     PRIMARY KEY CLUSTERED ([CUST_CODE] ASC);
 GO
 
--- Creating primary key on [ORD_NUM] in table 'ODER_NUM'
-ALTER TABLE [dbo].[ODER_NUM]
-ADD CONSTRAINT [PK_ODER_NUM]
+-- Creating primary key on [ORD_NUM] in table 'ORDER'
+ALTER TABLE [dbo].[ORDER]
+ADD CONSTRAINT [PK_ORDER]
     PRIMARY KEY CLUSTERED ([ORD_NUM] ASC);
 GO
 
@@ -93,10 +111,10 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [AGENTS_CODE] in table 'CUSTOMERS'
+-- Creating foreign key on [AGENT_CODE] in table 'CUSTOMERS'
 ALTER TABLE [dbo].[CUSTOMERS]
 ADD CONSTRAINT [FK_AGENTSCUSTOMER]
-    FOREIGN KEY ([AGENTS_CODE])
+    FOREIGN KEY ([AGENT_CODE])
     REFERENCES [dbo].[AGENTS]
         ([AGENT_CODE])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -105,11 +123,11 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_AGENTSCUSTOMER'
 CREATE INDEX [IX_FK_AGENTSCUSTOMER]
 ON [dbo].[CUSTOMERS]
-    ([AGENTS_CODE]);
+    ([AGENT_CODE]);
 GO
 
--- Creating foreign key on [AGENT_CODE] in table 'ODER_NUM'
-ALTER TABLE [dbo].[ODER_NUM]
+-- Creating foreign key on [AGENT_CODE] in table 'ORDER'
+ALTER TABLE [dbo].[ORDER]
 ADD CONSTRAINT [FK_AGENTSORDER]
     FOREIGN KEY ([AGENT_CODE])
     REFERENCES [dbo].[AGENTS]
@@ -119,12 +137,12 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AGENTSORDER'
 CREATE INDEX [IX_FK_AGENTSORDER]
-ON [dbo].[ODER_NUM]
+ON [dbo].[ORDER]
     ([AGENT_CODE]);
 GO
 
--- Creating foreign key on [CUST_CODE] in table 'ODER_NUM'
-ALTER TABLE [dbo].[ODER_NUM]
+-- Creating foreign key on [CUST_CODE] in table 'ORDER'
+ALTER TABLE [dbo].[ORDER]
 ADD CONSTRAINT [FK_CUSTOMERORDER]
     FOREIGN KEY ([CUST_CODE])
     REFERENCES [dbo].[CUSTOMERS]
@@ -134,7 +152,7 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CUSTOMERORDER'
 CREATE INDEX [IX_FK_CUSTOMERORDER]
-ON [dbo].[ODER_NUM]
+ON [dbo].[ORDER]
     ([CUST_CODE]);
 GO
 

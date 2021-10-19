@@ -27,6 +27,6 @@ namespace ORMPrac2.Model
     
         public virtual DbSet<AGENTS> AGENTS { get; set; }
         public virtual DbSet<CUSTOMER> CUSTOMERS { get; set; }
-        public virtual DbSet<ORDER> ODER_NUM { get; set; }
+        public virtual DbSet<ORDER> ORDER { get; set; }
     }
 }

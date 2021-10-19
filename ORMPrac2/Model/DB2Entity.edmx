@@ -8,18 +8,18 @@
   <EntityContainer Name="DB2EntityStoreContainer">
     <EntitySet Name="AGENTS" EntityType="DB2Entity.Store.AGENTS" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CUSTOMERS" EntityType="DB2Entity.Store.CUSTOMERS" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ODER_NUM" EntityType="DB2Entity.Store.ODER_NUM" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ORDER" EntityType="DB2Entity.Store.ORDER" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="AGENTSCUSTOMER" Association="DB2Entity.Store.AGENTSCUSTOMER">
       <End Role="AGENTS" EntitySet="AGENTS" />
       <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
     </AssociationSet>
     <AssociationSet Name="AGENTSORDER" Association="DB2Entity.Store.AGENTSORDER">
       <End Role="AGENTS" EntitySet="AGENTS" />
-      <End Role="ORDER" EntitySet="ODER_NUM" />
+      <End Role="ORDER" EntitySet="ORDER" />
     </AssociationSet>
     <AssociationSet Name="CUSTOMERORDER" Association="DB2Entity.Store.CUSTOMERORDER">
       <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
-      <End Role="ORDER" EntitySet="ODER_NUM" />
+      <End Role="ORDER" EntitySet="ORDER" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="AGENTS">
@@ -29,7 +29,7 @@
     <Property Name="AGENT_CODE" Type="int" Nullable="false" />
     <Property Name="AGENT_NAME" Type="nvarchar(max)" Nullable="false" />
     <Property Name="WORKING_AREA" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="COMISSION" Type="decimal" Nullable="false" />
+    <Property Name="COMISSION" Type="decimal" Nullable="false" Precision="18" Scale="3" />
     <Property Name="PHONE_NO" Type="nvarchar(max)" Nullable="false" />
     <Property Name="COUNTRY" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
@@ -43,20 +43,20 @@
     <Property Name="WORKING_AREA" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CUST_COUNTRY" Type="nvarchar(max)" Nullable="false" />
     <Property Name="GRADE" Type="int" Nullable="false" />
-    <Property Name="OPENING_AMT" Type="decimal" Nullable="false" />
-    <Property Name="RECEIVE_AMT" Type="decimal" Nullable="false" />
-    <Property Name="PAYMENT_AMT" Type="decimal" Nullable="false" />
-    <Property Name="OUTSTANDING_AMT" Type="decimal" Nullable="false" />
+    <Property Name="OPENING_AMT" Type="decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="RECEIVE_AMT" Type="decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="PAYMENT_AMT" Type="decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="OUTSTANDING_AMT" Type="decimal" Nullable="false" Precision="18" Scale="3" />
     <Property Name="PHONE_NO" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="AGENTS_CODE" Type="int" Nullable="false" />
+    <Property Name="AGENT_CODE" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="ODER_NUM">
+  <EntityType Name="ORDER">
     <Key>
       <PropertyRef Name="ORD_NUM" />
     </Key>
     <Property Name="ORD_NUM" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ORD_AMOUNT" Type="decimal" Nullable="false" />
-    <Property Name="ADVANCE_AMOUNT" Type="decimal" Nullable="false" />
+    <Property Name="ORD_AMOUNT" Type="decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="ADVANCE_AMOUNT" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ORD_DATE" Type="datetime" Nullable="false" />
     <Property Name="ORD_DESCRIPTION" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AGENT_CODE" Type="int" Nullable="false" />
@@ -70,13 +70,13 @@
         <PropertyRef Name="AGENT_CODE" />
       </Principal>
       <Dependent Role="CUSTOMER">
-        <PropertyRef Name="AGENTS_CODE" />
+        <PropertyRef Name="AGENT_CODE" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="AGENTSORDER">
     <End Role="AGENTS" Type="DB2Entity.Store.AGENTS" Multiplicity="1" />
-    <End Role="ORDER" Type="DB2Entity.Store.ODER_NUM" Multiplicity="*" />
+    <End Role="ORDER" Type="DB2Entity.Store.ORDER" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AGENTS">
         <PropertyRef Name="AGENT_CODE" />
@@ -88,7 +88,7 @@
   </Association>
   <Association Name="CUSTOMERORDER">
     <End Role="CUSTOMER" Type="DB2Entity.Store.CUSTOMERS" Multiplicity="1" />
-    <End Role="ORDER" Type="DB2Entity.Store.ODER_NUM" Multiplicity="*" />
+    <End Role="ORDER" Type="DB2Entity.Store.ORDER" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CUSTOMER">
         <PropertyRef Name="CUST_CODE" />
@@ -105,18 +105,18 @@
         <EntityContainer Name="DB2EntityContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AGENTS" EntityType="DB2Entity.AGENTS" />
           <EntitySet Name="CUSTOMERS" EntityType="DB2Entity.CUSTOMER" />
-          <EntitySet Name="ODER_NUM" EntityType="DB2Entity.ORDER" />
+          <EntitySet Name="ORDER" EntityType="DB2Entity.ORDER" />
           <AssociationSet Name="AGENTSCUSTOMER" Association="DB2Entity.AGENTSCUSTOMER">
             <End Role="AGENTS" EntitySet="AGENTS" />
             <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
           </AssociationSet>
           <AssociationSet Name="AGENTSORDER" Association="DB2Entity.AGENTSORDER">
             <End Role="AGENTS" EntitySet="AGENTS" />
-            <End Role="ORDER" EntitySet="ODER_NUM" />
+            <End Role="ORDER" EntitySet="ORDER" />
           </AssociationSet>
           <AssociationSet Name="CUSTOMERORDER" Association="DB2Entity.CUSTOMERORDER">
             <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
-            <End Role="ORDER" EntitySet="ODER_NUM" />
+            <End Role="ORDER" EntitySet="ORDER" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AGENTS">
@@ -124,11 +124,11 @@
             <PropertyRef Name="AGENT_CODE" />
           </Key>
           <Property Name="AGENT_CODE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="AGENT_NAME" Type="String" Nullable="false" />
-          <Property Name="WORKING_AREA" Type="String" Nullable="false" />
-          <Property Name="COMISSION" Type="Decimal" Nullable="false" />
-          <Property Name="PHONE_NO" Type="String" Nullable="false" />
-          <Property Name="COUNTRY" Type="String" Nullable="false" />
+          <Property Name="AGENT_NAME" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="WORKING_AREA" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="COMISSION" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="PHONE_NO" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="COUNTRY" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CUSTOMER" Relationship="DB2Entity.AGENTSCUSTOMER" FromRole="AGENTS" ToRole="CUSTOMER" />
           <NavigationProperty Name="ORDER" Relationship="DB2Entity.AGENTSORDER" FromRole="AGENTS" ToRole="ORDER" />
         </EntityType>
@@ -137,18 +137,18 @@
             <PropertyRef Name="CUST_CODE" />
           </Key>
           <Property Name="CUST_CODE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CUST_NAME" Type="String" Nullable="false" />
-          <Property Name="CUST_CITY" Type="String" Nullable="false" />
-          <Property Name="WORKING_AREA" Type="String" Nullable="false" />
-          <Property Name="CUST_COUNTRY" Type="String" Nullable="false" />
+          <Property Name="CUST_NAME" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CUST_CITY" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="WORKING_AREA" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CUST_COUNTRY" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="GRADE" Type="Int32" Nullable="false" />
-          <Property Name="OPENING_AMT" Type="Decimal" Nullable="false" />
-          <Property Name="RECEIVE_AMT" Type="Decimal" Nullable="false" />
-          <Property Name="PAYMENT_AMT" Type="Decimal" Nullable="false" />
-          <Property Name="OUTSTANDING_AMT" Type="Decimal" Nullable="false" />
-          <Property Name="PHONE_NO" Type="String" Nullable="false" />
+          <Property Name="OPENING_AMT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="RECEIVE_AMT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="PAYMENT_AMT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="OUTSTANDING_AMT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="PHONE_NO" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="AGENTS" Relationship="DB2Entity.AGENTSCUSTOMER" FromRole="CUSTOMER" ToRole="AGENTS" />
-          <Property Name="AGENTS_CODE" Type="Int32" Nullable="false" />
+          <Property Name="AGENT_CODE" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ORDER" Relationship="DB2Entity.CUSTOMERORDER" FromRole="CUSTOMER" ToRole="ORDER" />
         </EntityType>
         <EntityType Name="ORDER">
@@ -156,10 +156,10 @@
             <PropertyRef Name="ORD_NUM" />
           </Key>
           <Property Name="ORD_NUM" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ORD_AMOUNT" Type="Decimal" Nullable="false" />
-          <Property Name="ADVANCE_AMOUNT" Type="Decimal" Nullable="false" />
-          <Property Name="ORD_DATE" Type="DateTime" Nullable="false" />
-          <Property Name="ORD_DESCRIPTION" Type="String" Nullable="false" />
+          <Property Name="ORD_AMOUNT" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="ADVANCE_AMOUNT" Type="String" Nullable="false" />
+          <Property Name="ORD_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ORD_DESCRIPTION" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="AGENTS" Relationship="DB2Entity.AGENTSORDER" FromRole="ORDER" ToRole="AGENTS" />
           <Property Name="AGENT_CODE" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CUSTOMER" Relationship="DB2Entity.CUSTOMERORDER" FromRole="ORDER" ToRole="CUSTOMER" />
@@ -173,7 +173,7 @@
               <PropertyRef Name="AGENT_CODE" />
             </Principal>
             <Dependent Role="CUSTOMER">
-              <PropertyRef Name="AGENTS_CODE" />
+              <PropertyRef Name="AGENT_CODE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -233,13 +233,13 @@
           <ScalarProperty Name="PAYMENT_AMT" ColumnName="PAYMENT_AMT" />
           <ScalarProperty Name="OUTSTANDING_AMT" ColumnName="OUTSTANDING_AMT" />
           <ScalarProperty Name="PHONE_NO" ColumnName="PHONE_NO" />
-          <ScalarProperty Name="AGENTS_CODE" ColumnName="AGENTS_CODE" />
+          <ScalarProperty Name="AGENT_CODE" ColumnName="AGENT_CODE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ODER_NUM">
+    <EntitySetMapping Name="ORDER">
       <EntityTypeMapping TypeName="IsTypeOf(DB2Entity.ORDER)">
-        <MappingFragment StoreEntitySet="ODER_NUM">
+        <MappingFragment StoreEntitySet="ORDER">
           <ScalarProperty Name="ORD_NUM" ColumnName="ORD_NUM" />
           <ScalarProperty Name="ORD_AMOUNT" ColumnName="ORD_AMOUNT" />
           <ScalarProperty Name="ADVANCE_AMOUNT" ColumnName="ADVANCE_AMOUNT" />
@@ -266,6 +266,7 @@
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->

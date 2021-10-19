@@ -16,7 +16,7 @@ namespace ORMPrac2.Model
     {
         public int ORD_NUM { get; set; }
         public decimal ORD_AMOUNT { get; set; }
-        public decimal ADVANCE_AMOUNT { get; set; }
+        public string ADVANCE_AMOUNT { get; set; }
         public System.DateTime ORD_DATE { get; set; }
         public string ORD_DESCRIPTION { get; set; }
         public int AGENT_CODE { get; set; }

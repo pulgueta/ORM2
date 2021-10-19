@@ -1,0 +1,14 @@
+E:\Documentos\dbClass\ORM2\ORMPrac2\obj\Debug\ORMPrac2.csproj.AssemblyReference.cache
+E:\Documentos\dbClass\ORM2\ORMPrac2\obj\Debug\ORMPrac2.Form1.resources
+E:\Documentos\dbClass\ORM2\ORMPrac2\obj\Debug\ORMPrac2.Properties.Resources.resources
+E:\Documentos\dbClass\ORM2\ORMPrac2\obj\Debug\ORMPrac2.csproj.GenerateResource.cache
+E:\Documentos\dbClass\ORM2\ORMPrac2\obj\Debug\ORMPrac2.csproj.CoreCompileInputs.cache
+E:\Documentos\dbClass\ORM2\ORMPrac2\bin\Debug\ORMPrac2.exe.config
+E:\Documentos\dbClass\ORM2\ORMPrac2\bin\Debug\ORMPrac2.exe
+E:\Documentos\dbClass\ORM2\ORMPrac2\bin\Debug\ORMPrac2.pdb
+E:\Documentos\dbClass\ORM2\ORMPrac2\bin\Debug\EntityFramework.dll
+E:\Documentos\dbClass\ORM2\ORMPrac2\bin\Debug\EntityFramework.SqlServer.dll
+E:\Documentos\dbClass\ORM2\ORMPrac2\bin\Debug\EntityFramework.xml
+E:\Documentos\dbClass\ORM2\ORMPrac2\bin\Debug\EntityFramework.SqlServer.xml
+E:\Documentos\dbClass\ORM2\ORMPrac2\obj\Debug\ORMPrac2.exe
+E:\Documentos\dbClass\ORM2\ORMPrac2\obj\Debug\ORMPrac2.pdb

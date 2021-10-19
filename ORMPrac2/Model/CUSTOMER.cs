@@ -31,7 +31,7 @@ namespace ORMPrac2.Model
         public decimal PAYMENT_AMT { get; set; }
         public decimal OUTSTANDING_AMT { get; set; }
         public string PHONE_NO { get; set; }
-        public int AGENTS_CODE { get; set; }
+        public int AGENT_CODE { get; set; }
     
         public virtual AGENTS AGENTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
