@@ -44,7 +44,7 @@ namespace ORMPrac2 {
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(48, 301);
+            this.button2.Location = new System.Drawing.Point(48, 179);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -53,7 +53,7 @@ namespace ORMPrac2 {
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(519, 301);
+            this.button3.Location = new System.Drawing.Point(519, 179);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 2;
@@ -62,21 +62,21 @@ namespace ORMPrac2 {
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(48, 187);
+            this.textBox1.Location = new System.Drawing.Point(48, 105);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(153, 20);
             this.textBox1.TabIndex = 3;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(245, 187);
+            this.textBox2.Location = new System.Drawing.Point(245, 105);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(153, 20);
             this.textBox2.TabIndex = 4;
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(441, 187);
+            this.textBox3.Location = new System.Drawing.Point(441, 105);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(153, 20);
             this.textBox3.TabIndex = 5;
@@ -85,7 +85,7 @@ namespace ORMPrac2 {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(712, 249);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace ORMPrac2 {
     public partial class Form1 : Form {
         public List<Model.AGENTS> oAgents;
-        public List<Model.CUSTOMER> oCustomers;
+        public List<Model.CUSTOMER> oCx;
         public List<Model.ORDER> oOrders;
         public int index = 0;
 
@@ -68,7 +68,7 @@ namespace ORMPrac2 {
                             dbTransaction.Commit();
 
                             MessageBox.Show("Database has been populated successfully", "Successful operation", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        } catch {
+                        } catch (Exception ex) {
                             dbTransaction.Rollback();
                             MessageBox.Show("An unexpected error occured, database could not be filled. \n\nApplication will be closed.", "Error found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Application.Exit();
@@ -82,7 +82,7 @@ namespace ORMPrac2 {
 
                 button1.Enabled = false;
                 oAgents = db.AGENTS.ToList();
-                oCustomers = db.CUSTOMERS.ToList();
+                oCx = db.CUSTOMERS.ToList();
                 oOrders = db.ORDER.ToList();
                 index = 0;
                 fill();
@@ -90,21 +90,26 @@ namespace ORMPrac2 {
         }
 
         public void fill() {
-            if (index < 0)
+            if (index < 0) { 
                 index = 0;
-            if (index >= oAgents.Count)
+            }
+
+            if (index >= oAgents.Count) {
                 index = oAgents.Count - 1;
+            }
+
             string str1 = "";
             string str2 = "";
 
             textBox1.Text = "";
             textBox2.Text = "";
             textBox3.Text = "";
+
             str1 = oAgents[index].AGENT_CODE.ToString() + "  -  " + oAgents[index].AGENT_NAME + ", en " + oAgents[index].WORKING_AREA;
             textBox1.Text = str1;
 
             List<Model.CUSTOMER> iCustomer = new List<Model.CUSTOMER>();
-            iCustomer = oCustomers.Where(a => a.AGENT_CODE == (int)oAgents[index].AGENT_CODE).ToList();
+            iCustomer = oCx.Where(a => a.AGENT_CODE == (int)oAgents[index].AGENT_CODE).ToList();
             if (iCustomer != null) {
                 str1 = "";
                 str2 = "";
@@ -120,9 +125,6 @@ namespace ORMPrac2 {
                             str2 = str2 + jOrder[j].ORD_NUM.ToString() + ",";
                         }
                     }
-
-
-
                 }
                 textBox2.Text = str1;
                 textBox3.Text = str2;
